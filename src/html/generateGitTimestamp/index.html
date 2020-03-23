@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Timestamp Calendar</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        td.selected {
+            background-color: #d3d3d3;
+            font-weight: bold;
+        }
+        #controls {
+            text-align: center;
+            margin: 20px;
+        }
+        select {
+            padding: 5px;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+        #copy-container {
+            text-align: center;
+            margin: 20px;
+        }
+        #copy-button {
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #copy-status {
+            color: green;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center">Click on a Date to Get Git Timestamp</h2>
+
+<div id="controls">
+    <select id="year-select"></select>
+    <select id="month-select">
+        <option value="0">January</option>
+        <option value="1">February</option>
+        <option value="2">March</option>
+        <option value="3">April</option>
+        <option value="4">May</option>
+        <option value="5">June</option>
+        <option value="6">July</option>
+        <option value="7">August</option>
+        <option value="8">September</option>
+        <option value="9">October</option>
+        <option value="10">November</option>
+        <option value="11">December</option>
+    </select>
+    <select id="hour-select"></select>
+    <select id="minute-select"></select>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+        </tr>
+    </thead>
+    <tbody id="calendar-body">
+        <!-- Calendar dates will be generated here by JavaScript -->
+    </tbody>
+</table>
+
+<p style="text-align:center" id="timestamp-output"></p>
+
+<div id="copy-container">
+    <p id="git-command-output"></p>
+    <button id="copy-button">Copy</button>
+    <span id="copy-status"></span>
+</div>
+
+<script>
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+    const currentDay = today.getDate();
+    const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
+
+    // Variables to keep track of the last selected date
+    let lastSelectedDate = null;
+
+    // Populate year select dropdown
+    const yearSelect = document.getElementById('year-select');
+    for (let year = currentYear - 10; year <= currentYear + 10; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.text = year;
+        yearSelect.add(option);
+    }
+    yearSelect.value = currentYear;
+
+    // Populate month select dropdown
+    const monthSelect = document.getElementById('month-select');
+    monthSelect.value = currentMonth;
+
+    // Populate hour select dropdown
+    const hourSelect = document.getElementById('hour-select');
+    for (let hour = 0; hour < 24; hour++) {
+        const option = document.createElement('option');
+        option.value = hour;
+        option.text = String(hour).padStart(2, '0');
+        hourSelect.add(option);
+    }
+    hourSelect.value = currentHour;
+
+    // Populate minute select dropdown
+    const minuteSelect = document.getElementById('minute-select');
+    for (let minute = 0; minute < 60; minute ++) {
+        const option = document.createElement('option');
+        option.value = minute;
+        option.text = String(minute).padStart(2, '0');
+        minuteSelect.add(option);
+    }
+    minuteSelect.value = currentMinute;
+
+    function generateCalendar(year, month) {
+        const calendarBody = document.getElementById('calendar-body');
+        calendarBody.innerHTML = '';
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        let date = 1;
+        for (let i = 0; i < 6; i++) {
+            const row = document.createElement('tr');
+            for (let j = 0; j < 7; j++) {
+                const cell = document.createElement('td');
+                if (i === 0 && j < firstDay) {
+                    cell.appendChild(document.createTextNode(''));
+                } else if (date > daysInMonth) {
+                    break;
+                } else {
+                    cell.textContent = date;
+                    if(new Date().getDate() === date) { // highlight if it is today
+                        cell.classList.add('selected');
+                        lastSelectedDate = cell;
+                    }
+                    cell.addEventListener('click', (function(year, month, day) {
+                        return function() {
+                            if (lastSelectedDate) {
+                                lastSelectedDate.classList.remove('selected');
+                            }
+                            cell.classList.add('selected');
+                            lastSelectedDate = cell;
+                            generateGitTimestamp(year, month, day);
+                        }
+                    })(year, month, date));
+                    row.appendChild(cell);
+                    date++;
+                }
+            }
+            calendarBody.appendChild(row);
+        }
+    }
+
+    function generateGitTimestamp(year, month, day) {
+        const selectedHour = parseInt(document.getElementById('hour-select').value, 10) || currentHour;
+        const selectedMinute = parseInt(document.getElementById('minute-select').value, 10) || currentMinute;
+        const selectedDate = new Date(year, month, day, selectedHour, selectedMinute);
+        const dayName = selectedDate.toLocaleDateString('en-US', { weekday: 'short' });
+        const monthName = selectedDate.toLocaleDateString('en-US', { month: 'short' });
+        const localOffset = getLocalTimezoneOffset();
+        const timestamp = `${dayName} ${monthName} ${day} ${String(selectedHour).padStart(2, '0')}:${String(selectedMinute).padStart(2, '0')} ${year} ${localOffset}`;
+
+        const gitCommand = `GIT_AUTHOR_DATE="${timestamp}" GIT_COMMITTER_DATE="${timestamp}" git commit -m "Your commit message"`;
+
+        document.getElementById('timestamp-output').textContent = `Git Timestamp: ${timestamp}`;
+        document.getElementById('git-command-output').textContent = gitCommand;
+
+        // Reset copy status
+        const copyStatus = document.getElementById('copy-status');
+        copyStatus.textContent = '';
+
+        // Copy functionality
+        const copyButton = document.getElementById('copy-button');
+        copyButton.onclick = function() {
+            navigator.clipboard.writeText(gitCommand).then(() => {
+                copyStatus.textContent = 'copied!';
+                setTimeout(() => {
+                    copyStatus.textContent = '';
+                }, 2000); // Reset status after 2 seconds
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        };
+    }
+
+    function getLocalTimezoneOffset() {
+        const offsetMinutes = new Date().getTimezoneOffset();
+        const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
+        const offsetRemainingMinutes = Math.abs(offsetMinutes) % 60;
+        const sign = offsetMinutes <= 0 ? '+' : '-';
+        return `${sign}${String(offsetHours).padStart(2, '0')}${String(offsetRemainingMinutes).padStart(2, '0')}`;
+    }
+
+    function updateCalendar() {
+        const selectedYear = parseInt(yearSelect.value);
+        const selectedMonth = parseInt(monthSelect.value);
+        generateCalendar(selectedYear, selectedMonth);
+    }
+
+    // Add event listeners for year, month, hour, and minute selects
+    yearSelect.addEventListener('change', updateCalendar);
+    monthSelect.addEventListener('change', updateCalendar);
+    hourSelect.addEventListener('change', () => generateGitTimestamp(parseInt(yearSelect.value), parseInt(monthSelect.value), parseInt(document.querySelector('td.selected')?.textContent) || today.getDate()));
+    minuteSelect.addEventListener('change', () => generateGitTimestamp(parseInt(yearSelect.value), parseInt(monthSelect.value), parseInt(document.querySelector('td.selected')?.textContent) || today.getDate()));
+
+    // Initialize calendar for current month
+    generateCalendar(currentYear, currentMonth);
+    generateGitTimestamp(currentYear, currentMonth, currentDay)
+</script>
+
+</body>
+</html>
