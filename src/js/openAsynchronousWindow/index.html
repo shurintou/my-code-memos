@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>openAsynchronousWindow</title>
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <button type="button" onclick="openWindowByCallBackFunc()">open window by callBackFunc</button>
+    <button type="button" onclick="openWindowByPromise()">open window by Promise</button>
+    <script type="text/javascript" src="./index.js"></script>
+    <script type="text/javascript">
+    /** 
+    * Sometimes you need to open a third-party auth page in a new window, 
+    * but the url must be got from server's response.    
+    * So, the popup window gets blocked because the window wasn't opened immediately after the open window click.
+    * This function is implemented to mitigate the situation by open the window immediately after the click, and then you 
+    * can do whatever you want by using the window object of return.
+    */
+        let strWindowName = 'myAsynchronousWindow'
+        let strWindowFeatures = 'menubar=yes, location=yes, resizable=yes, scrollbars=yes, status=yes'
+
+        function openWindowByCallBackFunc() {
+            openAsynchronousWindow(
+                strWindowName + 'callback',
+                strWindowFeatures,
+                (win, error) => {
+                    win.focus()
+                    if (!error) {
+                        //get url asynchronously
+                        setTimeout(() => {
+                            //after getting the url, do some thing to the window object
+                            win.location.href = 'https://www.google.com'
+                            win.alert('Window is relocated by callback function!')
+                        }, 500)
+                    }
+                    else {
+                        console.error(error)
+                    }
+                }
+            )
+        }
+
+        function openWindowByPromise() {
+            openAsynchronousWindow({'windowName': strWindowName + 'promise', 'windowFeatures': strWindowFeatures})
+            .then(win => {
+                win.focus()
+                //get url asynchronously
+                setTimeout(() => {
+                    //after getting the url, do some thing to the window object
+                    win.location.href = 'https://www.google.com'
+                    win.alert('Window is relocated by promise!')
+                }, 500)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+        }
+    </script>
+</body>
+
+</html>
