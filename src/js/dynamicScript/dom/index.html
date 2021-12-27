@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dynamically create script</title>
+</head>
+<body>
+    <script>
+        function errorHandler(){
+            //do something to handler error event
+        }
+
+        function loadHandler(){
+            //do something to handler load event 
+        }
+
+        // create a dynamic script with dom way
+        var scriptDom = null
+        var responseSrc = 'your script src which response from server'
+        if(responseSrc){
+            /* The order that creating dom, binding event handler, setting src is important ! */
+            scriptDom = document.createElement('script')
+            scriptDom.setAttribute('type', 'text/javascript') //scriptDom.type = 'text/javascript' woudl also work
+            document.body.appendChild(scriptDom)
+            scriptDom.onerror = errorHandler 
+            scriptDom.onload = loadHandler
+            scriptDom.setAttribute('src', responseSrc) //scriptDom.src = responseSrc would also work
+        }
+
+    </script>
+</body>
+</html>
