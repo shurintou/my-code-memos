@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const request = axios.create({ //create an instance using interceptors
     baseURL: '',
-    timeout: 0, // ms, 0 is intinite
+    timeout: 0, // ms, 0 is infinite
     headers: {'X-Custom-Header': ''}
 })
 
