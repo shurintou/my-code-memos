@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>object_assign</title>
+</head>
+<body>
+    <!-- 
+        Considering a case that the data object is got from two APIs, 
+        the following is to show how to combine the results.
+        Usually it could be used in react/vue.js with axios/ajax response.
+    -->
+    <script type="text/javascript">
+        //initialization
+        let resList = []
+        let api1List = []
+        let api2List = []
+
+        //first api
+        setTimeout(function(){
+            api1List.push({id: 1, name: 'Bob', age: 25})
+            api1List.push({id: 2, name: 'David', age: 20})
+            api1List.push({id: 3, name: 'John', age: 31})
+        },100)
+
+
+        //second api
+        setTimeout(function(){
+            api2List.push({id: 1, sex: 'man', hobby: 'running'})
+            api2List.push({id: 2, sex: 'man', hobby: 'swimming'})
+            api2List.push({id: 3, sex: 'woman', hobby: 'music'})
+        },300)
+
+
+        setTimeout(function(){
+            //combine two API results to the resList 
+            resList = api1List.map(target => {
+                let source = api2List.find(match => target.id === match.id)
+                return Object.assign(target, source)
+            })
+            console.log(resList)
+        },500)
+
+
+
+    </script>
+</body>
+</html>
