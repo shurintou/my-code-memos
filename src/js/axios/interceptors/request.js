@@ -27,7 +27,12 @@ request.interceptors.response.use(
             return Promise.reject('error')
         }
     },
-    error => Promise.reject(error)
+    error => {
+        if(error.code === 'ECONNABORTED' && error.message.indexOf('timeout') !== -1){
+            //handle the timeout error
+        }
+        Promise.reject(error)
+    }
 )
 
 export default request
