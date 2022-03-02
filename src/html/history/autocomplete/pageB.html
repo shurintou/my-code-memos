@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pageB</title>
+</head>
+<body onload="load()">
+    auto complete
+    <select id="auto_complete" onchange="select(event)">
+        <option value="on">on</option>
+        <option value="off">off</option>
+    </select>
+    <br>
+    <input autocomplete="on" type="radio" id="pageA" name="radio" onclick="location.href='./pageA.html'">
+    <label for="pageA">pageA</label>
+    <input autocomplete="on" type="radio" id="pageB" name="radio" onclick="location.href='./pageB.html'" checked>
+    <label for="pageB">pageB</label>
+    <p>In page B, pageB radio should be checked.</p>
+    <script src="./index.js"></script>
+</body>
+</html>
