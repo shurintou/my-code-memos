@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iterator</title>
+</head>
+<body>
+    <ul id="dom">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    <script>
+        function iterableChildNodes(){
+            let liChildren = document.getElementById('dom').childNodes // get an iterator not an array
+
+            //there are three methods to iterate liChildren
+            //method 1
+            //this method doesn't apply to document.getElementById('dom').children
+            liChildren.forEach(liChild => {
+                if(liChild.innerHTML)
+                console.log(liChild.innerHTML)
+            })
+
+            //method 2
+            for(let liChild of liChildren){ // 'in' will not work, make sure use 'of'
+                if(liChild.innerHTML)
+                console.log(liChild.innerHTML)
+            }
+
+            //method 3
+            let liChildrenList = Array.from(liChildren)// now we have filter, map, reduce, every, some ....
+            liChildrenList.forEach(liChild => {
+                if(liChild.innerHTML)
+                console.log(liChild.innerHTML)
+            })
+        }
+        iterableChildNodes()
+    </script>
+</body>
+</html>
