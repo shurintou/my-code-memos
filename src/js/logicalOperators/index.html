@@ -28,7 +28,7 @@
         console.log("1 && obj.c && obj.d: ", 1 && obj.c && obj.d)//null
         console.log("1 && obj.e && undefined && null: ", 1 && obj.e && undefined && null)//0
 
-        // a ?? b ?? c return first defined value
+        // a ?? b ?? c return first defined(!== undefined && !== null) value
         console.log("obj.f ?? obj.e ?? 1: ", obj.f ?? obj.e ?? 1)//0
         console.log("obj.f || obj.e || 1: ", obj.f || obj.e || 1)//1
     </script>
