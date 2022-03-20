@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>logicalOperators</title>
+</head>
+<body>
+    <script>
+        let obj = {a: 1, b: "", c: null, d: undefined, e: 0}
+        let str = ""
+        console.log("obj:", obj)
+        console.log("obj?.a: ", obj?.a)//1
+        console.log("obj?.b: ", obj?.b)//""
+        console.log("obj?.c: ", obj?.c)//null
+        console.log("obj?.d: ", obj?.d)//undefined
+        console.log("obj?.e: ", obj?.e)//0
+        console.log("obj?.f: ", obj?.f)//undefined
+        console.log("str: ", str)//""
+
+        // a || b || c return first true value
+        console.log("str || obj.b || 1: ", str || obj.b || 1)//1
+        console.log("null || undefined || obj.e || 1: ", null || undefined || obj.e || 1)//1
+
+        // a && b && c return first false(false, 0, "", null, undefined) value
+        console.log("1 && str && obj.c: ", 1 && str && obj.c)//""
+        console.log("1 && obj.c && obj.d: ", 1 && obj.c && obj.d)//null
+        console.log("1 && obj.e && undefined && null: ", 1 && obj.e && undefined && null)//0
+
+        // a ?? b ?? c return first defined value
+        console.log("obj.f ?? obj.e ?? 1: ", obj.f ?? obj.e ?? 1)//0
+        console.log("obj.f || obj.e || 1: ", obj.f || obj.e || 1)//1
+    </script>
+</body>
+</html>
