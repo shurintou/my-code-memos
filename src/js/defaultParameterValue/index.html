@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>defaultParameterValue</title>
+</head>
+
+<body>
+    <script>
+        function func(numA = 1, numB) { // "numA = 1" gives numA a default value when it is passed an undefined.
+            console.log("numA = ", numA, "numB = ", numB)
+        }
+        func(undefined, undefined) // numA = 1, numB = undefined
+        func(null, null) // numA = null, numB = null
+        func(2, 2) // numA = 2, numB = 2
+    </script>
+</body>
+
+</html>
