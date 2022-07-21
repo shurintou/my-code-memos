@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>pageB</title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
+
 <body onload="load()">
     auto complete
     <select id="auto_complete" onchange="select(event)">
@@ -17,7 +20,9 @@
     <label for="pageA">pageA</label>
     <input autocomplete="on" type="radio" id="pageB" name="radio" onclick="location.href='./pageB.html'" checked>
     <label for="pageB">pageB</label>
+    <p class="page_text">Now you are at <span class="page_keyword">pageB</span>.html</p>
     <p>In page B, pageB radio should be checked.</p>
     <script src="./index.js"></script>
 </body>
+
 </html>
