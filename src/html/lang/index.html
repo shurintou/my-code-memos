@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lang</title>
+</head>
+
+<body>
+    <!-- to set lang attribute to make font be rendered correctly.  -->
+    <p>こちらは日本語です。</p>
+    <p lang="zh">こちらは日本語です。</p>
+    <p lang="en">こちらは日本語です。</p>
+    <p lang="ja">こちらは日本語です。</p>
+    <p>这是一段中文。</p>
+    <p lang="zh">这是一段中文。</p>
+    <p lang="en">这是一段中文。</p>
+    <p lang="ja">这是一段中文。</p>
+    <p>This is English.</p>
+    <p lang="zh">This is English.</p>
+    <p lang="en">This is English.</p>
+    <p lang="ja">This is English.</p>
+    <script>
+        const pList = Array.from(document.getElementsByTagName('p'))
+        pList.forEach(p => {
+            p.innerHTML = p.innerHTML + '(' + (p.getAttribute('lang') || 'use html default lang attribute') + ')'
+        })
+    </script>
+</body>
+
+</html>
