@@ -22,7 +22,7 @@ WHERE
     resource_database_id = 0 -- 0 is the id of your DB
 
 
--- Check the info of a certain connection
+-- Check the info of a certain connection, such as isolation level
 DBCC USEROPTIONS
 
 
