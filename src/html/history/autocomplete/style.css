@@ -1,0 +1,10 @@
+.page_text {
+    font-size: large;
+    font-weight: bolder;
+}
+
+.page_keyword {
+    color: blue;
+    font-size: large;
+    font-weight: bolder;
+}

@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>japaneseInputModeNumberError</title>
+    <style>
+        input {
+            width: 80%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
+
 <body>
-    <p>The input below works fine in most devices, but in iPhone with Japanese input mode it works not well.</p>
-    <input type="text" placeholder="please type some number" oninput="value = value.replace(/[^0-9]+/i,'')">
+    <p>The input below only allows number, it works fine in most devices, but in IOS with Japanese input mode it works
+        not well.</p>
+    <input type="text" placeholder="type any number" oninput="value = value.replace(/[^0-9]+/i,'')">
+
+    <p>The input below has been fixed.</p>
+    <input type="number" placeholder="type any number">
 </body>
+
 </html>
