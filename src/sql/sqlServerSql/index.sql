@@ -49,7 +49,8 @@ SET
 --WITH
     --ROLLBACK IMMEDIATE
 
-
+-- When SET XACT_ABORT is ON, if a Transact-SQL statement raises a run-time error, the entire transaction is terminated and rolled back.
+SET XACT_ABORT ON
 -- Execute a sql with transaction
 BEGIN TRANSACTION
     SELECT 
