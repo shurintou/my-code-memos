@@ -14,6 +14,12 @@ Sub strToXmlFile()
     With oXml
         'import the string 
         .LoadXML (sXml)
+        ' handle the error
+        With .parseError
+            If .ErrorCode <> 0 Then
+                MsgBox(.reason)
+            End If
+        End With 
         'define the path to save the XML file
         Dim sResultXml As String
         sResultXml = wb.Path & "\result.xml"
