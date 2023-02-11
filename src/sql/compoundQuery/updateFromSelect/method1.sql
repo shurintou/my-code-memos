@@ -8,7 +8,7 @@ SET
     targetTable.columnB = sourceTable.columnB
 FROM 
     tableA targetTable
-INNER JOIN
+INNER JOIN -- If LEFT JOIN is used, a null will be updated while INNER JOIN always update with value.
     tableB sourceTable
 ON 
     targetTable.id = sourceTable.id
