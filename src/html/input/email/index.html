@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>input email</title>
+</head>
+
+<body>
+    <label>
+        <div>input an email something like abcd@あいうえお.com or efgh@啊波次得.com</div>
+        <div>
+            <input id="domain" type="email" style="width:50vw" onchange="inputChangeHandler(event)"
+                oninput="inputHandler(event)">
+        </div>
+    </label>
+    <div>What you see: <output id="domain_see"></div>
+    <div>What you get: <output id="domain_get"></div>
+    <script type="text/javascript" src="./punycode.js"></script>
+    <script type="text/javascript">
+        function inputChangeHandler(e) {
+            alert(`
+            You got a value as 
+            ${e.target.value},
+            
+            while you see it displays as
+            ${punycode.ToUnicode(e.target.value)}.`)
+        }
+
+        function inputHandler(e) {
+            document.getElementById('domain_see').innerText = punycode.ToUnicode(e.target.value)
+            document.getElementById('domain_get').innerText = e.target.value
+        }
+    </script>
+</body>
+
+</html>
