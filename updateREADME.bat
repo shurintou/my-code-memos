@@ -8,7 +8,13 @@ set replace_str=https://shurintou.github.io/my-code-memos/src
 (
 echo.
 for /r "%folder%" %%i in (*) do (
-  if "%%~ai" NEQ "d" echo %%~fi
+  if "%%~nxi"==".gitignore" (
+    rem do nothing
+  ) else (
+    echo %%~fi | findstr /i /r "^.*\\dist\\.*$" >nul || (
+      if "%%~ai" NEQ "d" echo %%~fi
+    )
+  )
 )
 ) > "%markdown_file%.tmp"
 
