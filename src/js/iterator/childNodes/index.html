@@ -16,31 +16,62 @@
         <li>6</li>
     </ul>
     <script>
-        function iterableChildNodes(){
-            let liChildren = document.getElementById('dom').childNodes // get an iterator not an array
+        function iterateNodes(){
+            let liChildren = document.getElementById('dom').childNodes // get a NodeList not an array
 
             //there are three methods to iterate liChildren
             //method 1
             //this method doesn't apply to document.getElementById('dom').children
+            console.log('iterateNodes by forEach')
             liChildren.forEach(liChild => {
                 if(liChild.innerHTML)
                 console.log(liChild.innerHTML)
             })
 
             //method 2
+            console.log('iterateNodes by for...of...')
             for(let liChild of liChildren){ // 'in' will not work, make sure use 'of'
                 if(liChild.innerHTML)
                 console.log(liChild.innerHTML)
             }
 
             //method 3
+            console.log('iterateNodes by Array.from')
             let liChildrenList = Array.from(liChildren)// now we have filter, map, reduce, every, some ....
             liChildrenList.forEach(liChild => {
                 if(liChild.innerHTML)
                 console.log(liChild.innerHTML)
             })
         }
-        iterableChildNodes()
+        iterateNodes()
+
+        function iterateHTMLCollection() {
+            let liChildren = document.getElementsByTagName('li') // get a HTMLCollection not an array
+
+            //there are two methods to iterate liChildren
+            //forEach is not working.
+
+            //method 1
+            console.log('iterateHTMLCollection by for...of...')
+            for(let liChild of liChildren){ // 'in' will not work, make sure use 'of'
+                if(liChild.innerHTML)
+                console.log(liChild.innerHTML)
+            }
+
+            //method 2
+            console.log('iterateHTMLCollection by Array.from')
+            let liChildrenList = Array.from(liChildren)// now we have filter, map, reduce, every, some ....
+            liChildrenList.forEach(liChild => {
+                if(liChild.innerHTML)
+                console.log(liChild.innerHTML)
+            })
+        }
+        iterateHTMLCollection()
+
+        /** 
+         * To see all the differences they have, check
+         * https://www.freecodecamp.org/news/dom-manipulation-htmlcollection-vs-nodelist/
+         */
     </script>
 </body>
 </html>
